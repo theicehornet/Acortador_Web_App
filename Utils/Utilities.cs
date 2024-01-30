@@ -32,7 +32,7 @@ namespace Acortador_Web_App.Utils
             {
                 string link = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
                 if (!link.Contains('/'))
-                    return link;
+                    return link.Substring(0,7);
             }
         }
 
