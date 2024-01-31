@@ -1,5 +1,6 @@
 using Acortador_Web_App.Models;
 using Microsoft.EntityFrameworkCore;
+using Acortador_Web_App.Services;
 
 namespace Acortador_Web_App
 {
@@ -16,6 +17,8 @@ namespace Acortador_Web_App
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ACORTADORDB"));
             });
+
+            builder.Services.AddScoped<IEmailService,EmailService>();
 
             var app = builder.Build();
 

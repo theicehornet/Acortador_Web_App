@@ -18,8 +18,6 @@ public partial class AcortadorurlContext : DbContext
     public virtual DbSet<Acortador> Acortadors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
-
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Acortador>(entity =>
@@ -29,6 +27,9 @@ public partial class AcortadorurlContext : DbContext
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Lasttime)
+                .HasColumnType("datetime")
+                .HasColumnName("lasttime");
             entity.Property(e => e.Link).HasColumnType("text");
         });
 

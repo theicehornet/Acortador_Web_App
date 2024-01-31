@@ -8,7 +8,7 @@ namespace Acortador_Web_App.Utils
         public static string CrearQr(string text)
         {
             var qrgenerator = new QRCodeGenerator();
-            var qrCodeData = qrgenerator.CreateQrCode(text,QRCodeGenerator.ECCLevel.Q);
+            var qrCodeData = qrgenerator.CreateQrCode(text,QRCodeGenerator.ECCLevel.H);
             BitmapByteQRCode bitmapbytecode = new BitmapByteQRCode(qrCodeData);
             var bitmap = bitmapbytecode.GetGraphic(20);
             
@@ -23,6 +23,7 @@ namespace Acortador_Web_App.Utils
             Acortador ac = new Acortador();
             ac.Id = IdAcortador();
             ac.Link = text;
+            ac.Lasttime = null;
             return ac;
         }
 
@@ -53,6 +54,7 @@ namespace Acortador_Web_App.Utils
             }
             throw new Exception("No encontrado");
         }
+
 
     }
 }
