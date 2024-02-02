@@ -8,7 +8,7 @@ namespace Acortador_Web_App.Utils
         public static string CrearQr(string text)
         {
             var qrgenerator = new QRCodeGenerator();
-            var qrCodeData = qrgenerator.CreateQrCode(text,QRCodeGenerator.ECCLevel.H);
+            var qrCodeData = qrgenerator.CreateQrCode(text,QRCodeGenerator.ECCLevel.L);
             BitmapByteQRCode bitmapbytecode = new BitmapByteQRCode(qrCodeData);
             var bitmap = bitmapbytecode.GetGraphic(20);
             
@@ -55,6 +55,9 @@ namespace Acortador_Web_App.Utils
             throw new Exception("No encontrado");
         }
 
-
+        internal static bool isURL(string url)
+        {
+            return url.StartsWith("https://") || url.StartsWith("http://");
+        }
     }
 }

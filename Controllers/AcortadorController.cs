@@ -26,15 +26,18 @@ public class AcortadorController : Controller
     [HttpGet("/{id}")]
     public async Task<IActionResult> Index(string id)
     {
-        if (id == null) return View();
+        if (id == null || id == "Acortador_Web_App.styles.css") return View();
         try
         {
             Acortador url = await _context.Acortadors.FindAsync(id);
             url.Lasttime = DateTime.Now;
             var saving = _context.SaveChangesAsync();
-            _emailService.SendEmail(new EmailDTO("ingrese un email", "Nuevo uso del acortador", "Se ha usado el acortador con id " + id));
+            _emailService.SendEmail(new EmailDTO("algun correo", "Nuevo uso del acortador", $"Se ha usado el acortador con id: {id}, el link es {url.Link}"));
             await saving;
-            return Redirect(url.Link);
+            if (Utilities.isURL(url.Link))
+                return Redirect(url.Link);
+            else
+                return Json(url.Link);
         }
         catch
         {
@@ -61,7 +64,7 @@ public class AcortadorController : Controller
             _context.Add(acor);
             await _context.SaveChangesAsync();
         }
-        ViewBag.Qr = Utilities.CrearQr("https://localhost:7234" + acor.Id);
+        ViewBag.Qr = Utilities.CrearQr("https://AcotadorURL.somee.com/" + acor.Id);
         return View("Index", acor);
     }
 }
