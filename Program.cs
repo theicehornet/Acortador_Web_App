@@ -13,12 +13,22 @@ namespace Acortador_Web_App
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<AcortadorurlContext>(options =>
+            builder.Services.AddDbContext<ShorturlContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ACORTADORDB"));
             });
 
             builder.Services.AddScoped<IEmailService,EmailService>();
+
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,6 +45,8 @@ namespace Acortador_Web_App
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

@@ -8,11 +8,11 @@ namespace Acortador_Web_App.Controllers;
 
 public class AcortadorController : Controller
 {
-    private readonly AcortadorurlContext _context;
+    private readonly ShorturlContext _context;
 
     private readonly IEmailService _emailService;
 
-    public AcortadorController(AcortadorurlContext context, IEmailService emailService)
+    public AcortadorController(ShorturlContext context, IEmailService emailService)
     {
         _context = context;
         _emailService = emailService;
@@ -24,7 +24,7 @@ public class AcortadorController : Controller
     }
 
     [HttpGet("/{id}")]
-    public async Task<IActionResult> Index(string id)
+    public async Task<IActionResult> IndexAsync(string id)
     {
         if (id == null || id == "Acortador_Web_App.styles.css") return View();
         try
@@ -34,7 +34,7 @@ public class AcortadorController : Controller
             var saving = _context.SaveChangesAsync();
             _emailService.SendEmail(new EmailDTO("algun correo", "Nuevo uso del acortador", $"Se ha usado el acortador con id: {id}, el link es {url.Link}"));
             await saving;
-            if (Utilities.isURL(url.Link))
+            if (Utilities.IsURL(url.Link))
                 return Redirect(url.Link);
             else
                 return Json(url.Link);

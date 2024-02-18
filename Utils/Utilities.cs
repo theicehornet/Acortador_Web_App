@@ -20,10 +20,12 @@ namespace Acortador_Web_App.Utils
 
         public static Acortador CrearAcortador(string text)
         {
-            Acortador ac = new Acortador();
-            ac.Id = IdAcortador();
-            ac.Link = text;
-            ac.Lasttime = null;
+            Acortador ac = new Acortador
+            {
+                Id = IdAcortador(),
+                Link = text,
+                Lasttime = null
+            };
             return ac;
         }
 
@@ -33,7 +35,7 @@ namespace Acortador_Web_App.Utils
             {
                 string link = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
                 if (!link.Contains('/'))
-                    return link.Substring(0,7);
+                    return link[..7];
             }
         }
 
@@ -55,7 +57,7 @@ namespace Acortador_Web_App.Utils
             throw new Exception("No encontrado");
         }
 
-        internal static bool isURL(string url)
+        internal static bool IsURL(string url)
         {
             return url.StartsWith("https://") || url.StartsWith("http://");
         }

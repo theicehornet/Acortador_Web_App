@@ -20,3 +20,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.List-Enlace{
+    text-align:center;
+    list-style:none;
+    display:grid;
+    width:100%;
+    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    gap:20px;
+}
+
+.List-Enlace li{
+    display:flex;
+    flex-direction:column;
+}
+
+.List-Enlace li form{
+    margin-top:auto;
+}

@@ -10,4 +10,8 @@ public partial class Acortador
     public string Link { get; set; } = null!;
 
     public DateTime? Lasttime { get; set; }
+
+    public string? UserId { get; set; }
+
+    public virtual Usuario? User { get; set; }
 }

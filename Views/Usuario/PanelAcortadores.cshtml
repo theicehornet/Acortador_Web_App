@@ -1,0 +1,26 @@
+﻿@model List<Acortador>;
+
+<ul class="List-Enlace">
+    @foreach (var ac in Model)
+    {
+        <li>
+            <p>El id es: @ac.Id</p>
+            <p>El Link es: <a href="@ac.Link">@ac.Link</a></p>
+            
+            @{
+                if(ac.Lasttime == null)
+                {
+                    <p>Todavia no ha sido usado el enlace</p>
+                }
+                else
+                {
+                    <p>El ultimo uso ha sido: @ac.Lasttime</p>
+                }
+            }
+            <form method="delete" action="/Administrador/EliminarEnlace">
+                <input type="hidden" value="@ac.Id" name="id"/>
+                <button class="btn btn-danger w-100" type="submit" >Eliminar</button>
+            </form>
+         </li>
+    }
+</ul>
