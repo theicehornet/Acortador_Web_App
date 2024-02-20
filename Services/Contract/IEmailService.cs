@@ -1,5 +1,5 @@
 ﻿using Acortador_Web_App.Models;
-namespace Acortador_Web_App.Services
+namespace Acortador_Web_App.Services.Contract
 {
     public interface IEmailService
     {

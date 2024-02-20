@@ -1,5 +1,7 @@
 ﻿using Acortador_Web_App.Models;
 using QRCoder;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Acortador_Web_App.Utils
 {
@@ -61,5 +63,19 @@ namespace Acortador_Web_App.Utils
         {
             return url.StartsWith("https://") || url.StartsWith("http://");
         }
+
+        public static string EncodePassword(string password)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SHA256 hash = SHA256.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                byte[] result = hash.ComputeHash(enc.GetBytes(password));
+                foreach(byte b in result)
+                    sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
+        }
+
     }
 }

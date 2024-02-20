@@ -3,8 +3,9 @@ using MailKit.Security;
 using MimeKit.Text;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Acortador_Web_App.Services.Contract;
 
-namespace Acortador_Web_App.Services
+namespace Acortador_Web_App.Services.Implementation
 {
     public class EmailService : IEmailService
     {

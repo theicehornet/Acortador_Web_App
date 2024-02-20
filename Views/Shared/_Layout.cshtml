@@ -18,23 +18,28 @@
             </div>
             <div class=" navbar-nav collapse d-sm-inline-flex justify-content-between w-100">
                 <ul class="navbar-nav flex-grow-1 text-decoration-none justify-content-end">
+                    @if (Context.Session.GetString("isAdmin") == "True")
+                    {
+                        <li class="nav-item ">
+                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="PanelAcortadores">Panel del Administrador</a>
+                        </li>
+                    }
                     @if(Context.Session.GetString("user") == null)
                     {
                         <li class="nav-item ">
-                            <a class="nav-link text-dark text-decoration-none" asp-controller="" asp-action="">Iniciar Sesión</a>
+                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="IniciarSesion">Iniciar Sesión</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link text-dark text-decoration-none" asp-controller="" asp-action="">Registrarse</a>
+                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="Registrarse">Registrarse</a>
                         </li>
                     }else{
                         <li class="nav-item ">
-                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="PanelAcortadores">Panel de Administrador</a>
+                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="Perfil">Perfil</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="CerrarSesion">Cerrar Sesión</a>
                         </li>
                     }
-                    
                 </ul>
             </div>
         </nav>

@@ -1,6 +1,7 @@
 using Acortador_Web_App.Models;
 using Microsoft.EntityFrameworkCore;
-using Acortador_Web_App.Services;
+using Acortador_Web_App.Services.Contract;
+using Acortador_Web_App.Services.Implementation;
 
 namespace Acortador_Web_App
 {
@@ -19,6 +20,7 @@ namespace Acortador_Web_App
             });
 
             builder.Services.AddScoped<IEmailService,EmailService>();
+            builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
             builder.Services.AddDistributedMemoryCache();
 

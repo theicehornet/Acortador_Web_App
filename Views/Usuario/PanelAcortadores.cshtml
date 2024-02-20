@@ -1,5 +1,7 @@
 ﻿@model List<Acortador>;
-
+@{
+    ViewData["Title"] = "Panel del Administrador";
+}
 <ul class="List-Enlace">
     @foreach (var ac in Model)
     {
@@ -17,10 +19,7 @@
                     <p>El ultimo uso ha sido: @ac.Lasttime</p>
                 }
             }
-            <form method="delete" action="/Administrador/EliminarEnlace">
-                <input type="hidden" value="@ac.Id" name="id"/>
-                <button class="btn btn-danger w-100" type="submit" >Eliminar</button>
-            </form>
+            <a class="btn btn-danger w-100" href="/Administrador/EliminarEnlace?id=@ac.Id">Eliminar</a>
          </li>
     }
 </ul>

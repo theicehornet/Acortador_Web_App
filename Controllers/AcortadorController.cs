@@ -1,5 +1,5 @@
 ﻿using Acortador_Web_App.Models;
-using Acortador_Web_App.Services;
+using Acortador_Web_App.Services.Contract;
 using Acortador_Web_App.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
