@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" defer/>
     <link rel="stylesheet" href="~/Acortador_Web_App.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
@@ -18,12 +18,6 @@
             </div>
             <div class=" navbar-nav collapse d-sm-inline-flex justify-content-between w-100">
                 <ul class="navbar-nav flex-grow-1 text-decoration-none justify-content-end">
-                    @if (Context.Session.GetString("isAdmin") == "True")
-                    {
-                        <li class="nav-item ">
-                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="PanelAcortadores">Panel del Administrador</a>
-                        </li>
-                    }
                     @if(Context.Session.GetString("user") == null)
                     {
                         <li class="nav-item ">
@@ -34,7 +28,13 @@
                         </li>
                     }else{
                         <li class="nav-item ">
-                            <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="Perfil">Perfil</a>
+                            @if (Context.Session.GetString("isAdmin") == "True"){
+                                <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="Perfil">Panel del Administrador</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="Perfil">Perfil</a>
+                            }
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link text-dark text-decoration-none" asp-controller="Usuario" asp-action="CerrarSesion">Cerrar Sesión</a>

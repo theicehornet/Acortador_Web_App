@@ -21,14 +21,14 @@
 
 @if (ViewBag.Qr != null)
 {
-    <section class="container">
+    <article class="container">
         <div class="row justify-content-center align-content-center">
             <p class="col-4 align-self-center">https://AcotadorURL.somee.com/@Model?.Id</p>
             <figure class="col-4">
                 <img src="data:image/png;base64,@ViewBag.Qr" class="img-fluid"/>
             </figure>
         </div>
-    </section>
+    </article>
 }
 
 @if(ViewBag.Error != null)

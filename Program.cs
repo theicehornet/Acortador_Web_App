@@ -21,6 +21,7 @@ namespace Acortador_Web_App
 
             builder.Services.AddScoped<IEmailService,EmailService>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+            builder.Services.AddScoped<IAcortadorService, AcortadorService>();
 
             builder.Services.AddDistributedMemoryCache();
 

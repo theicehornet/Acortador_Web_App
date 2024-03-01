@@ -20,12 +20,12 @@ namespace Acortador_Web_App.Utils
             return Convert.ToBase64String(byteimage);
         }
 
-        public static Acortador CrearAcortador(string text)
+        public static Acortador CrearAcortador(string link)
         {
             Acortador ac = new Acortador
             {
                 Id = IdAcortador(),
-                Link = text,
+                Link = link,
                 Lasttime = null
             };
             return ac;
@@ -37,7 +37,7 @@ namespace Acortador_Web_App.Utils
             {
                 string link = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
                 if (!link.Contains('/'))
-                    return link[..7];
+                    return link[..10];
             }
         }
 

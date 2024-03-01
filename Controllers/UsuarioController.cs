@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Acortador_Web_App.Controllers
 {
-    public class UsuarioController(ShorturlContext context, IEmailService emailService,IUsuarioService usuarioService) : Controller
+    public class UsuarioController(IUsuarioService usuarioService, IAcortadorService acortadorService) : Controller
     {
+        private readonly IAcortadorService _acortadorService = acortadorService;
         public IActionResult Registrarse() => View();
 
         [HttpPost]
@@ -52,54 +53,11 @@ namespace Acortador_Web_App.Controllers
                 Console.WriteLine(Json(user).ToString());
             }catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
+                ViewData["Error"] = ex.Message;
             }
             return View();
         }
-
-        public IActionResult CerrarSesion()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("IniciarSesion"); ;
-        }
-
-
-        public async Task<IActionResult> PanelAcortadores()
-        {
-            string? idUser = HttpContext.Session.GetString("idUser");
-            if (idUser == null)
-            {
-                TempData["Error"] = "Inicie session porfavor";
-                return RedirectToAction("IniciarSesion");
-            }else if(!context.Usuarios.Find(idUser).IsAdministrador)
-            {
-                TempData["Error"] = "Usted no es un administrador";
-                return RedirectToAction("IniciarSesion");
-            }
-            List<Acortador> acortadores = await context.Acortadors.ToListAsync();
-            return View(acortadores);
-        }
-
-        public async Task<IActionResult> EliminarEnlace(string id)
-        {
-            string? idUser = HttpContext.Session.GetString("idUser");
-            if (idUser == null)
-            {
-                TempData["Error"] = "Inicie session porfavor";
-                return RedirectToAction("IniciarSesion");
-            }
-            else if (context.Usuarios.Find(idUser)?.IsAdministrador == null)
-            {
-                TempData["Error"] = "Usted no es un administrador";
-                return RedirectToAction("IniciarSesion");
-            }
-            var ac = context.Acortadors.FindAsync(id);
-            var obj = await ac;
-            context.Acortadors.Remove(obj);
-            context.SaveChanges();
-            return Redirect("/Administrador/Index");
-        }
-
         public async Task<IActionResult> Perfil()
         {
             string? idUser = HttpContext.Session.GetString("idUser");
@@ -109,7 +67,22 @@ namespace Acortador_Web_App.Controllers
                 return RedirectToAction("IniciarSesion");
             }
             Usuario user = await usuarioService.GetUsuario(idUser);
-            return View(user);
+            List<Acortador> acortadores;
+            if (!user.IsAdministrador)
+            {
+                ViewData["Title"] = "Perfil";
+                acortadores = await _acortadorService.ObtenerAcortadoresUsuario(idUser);
+                return View(acortadores);
+            }
+            acortadores = await _acortadorService.ObtenerAcortadores();
+            ViewData["Title"] = "Panel del Administrador";
+            return View(acortadores);
         }
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("IniciarSesion"); ;
+        }
+
     }
 }
